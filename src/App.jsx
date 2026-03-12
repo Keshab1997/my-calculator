@@ -24,7 +24,33 @@ function App() {
   }, [display]);
 
   const handleInput = (value) => {
-    if (display === '0' || display === 'Error') {
+    if (display === 'Error') {
+      setDisplay(value);
+      return;
+    }
+
+    // Prevent multiple operators in a row
+    const operators = ['+', '-', '*', '/', '^', '%'];
+    const lastChar = display.slice(-1);
+    
+    if (operators.includes(value) && operators.includes(lastChar)) {
+      return; // Don't allow two operators in a row
+    }
+
+    // Prevent multiple dots in the same number
+    if (value === '.') {
+      const parts = display.split(/[+\-*/^%()]/);
+      const lastPart = parts[parts.length - 1];
+      if (lastPart.includes('.')) {
+        return; // Already has a dot in current number
+      }
+    }
+
+    // Prevent starting with operators (except minus for negative numbers)
+    if (display === '0') {
+      if (operators.includes(value) && value !== '-') {
+        return;
+      }
       setDisplay(value);
     } else {
       setDisplay(display + value);
@@ -33,8 +59,20 @@ function App() {
 
   const calculate = () => {
     try {
-      const result = evaluate(display);
-      const calculation = `${display} = ${result}`;
+      // Remove trailing operators before calculation
+      let expression = display.trim();
+      const operators = ['+', '-', '*', '/', '^', '%'];
+      while (operators.includes(expression.slice(-1))) {
+        expression = expression.slice(0, -1);
+      }
+      
+      if (!expression || expression === '') {
+        setDisplay('Error');
+        return;
+      }
+      
+      const result = evaluate(expression);
+      const calculation = `${expression} = ${result}`;
       setHistory([calculation, ...history.slice(0, 9)]);
       setDisplay(result.toString());
     } catch {
