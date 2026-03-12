@@ -88,12 +88,18 @@
   font-size: 36px;
   margin-bottom: 10px;
   word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  overflow-x: auto;
+  overflow-y: hidden;
   min-height: 80px;
+  max-height: 120px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   cursor: pointer;
   transition: all 0.3s ease;
+  white-space: normal;
 }
 
 .display:hover {
@@ -261,8 +267,9 @@ button.scientific:hover {
   }
 
   .display {
-    font-size: 28px;
+    font-size: 24px;
     padding: 20px;
+    max-height: 100px;
   }
 
   button {
@@ -281,7 +288,8 @@ button.scientific:hover {
 
 @media (max-width: 350px) {
   .display {
-    font-size: 24px;
+    font-size: 20px;
+    max-height: 90px;
   }
 
   button {
