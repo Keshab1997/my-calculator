@@ -15,11 +15,11 @@
 }
 
 .app.dark {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+  background: #000000;
 }
 
 .app.light {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: #1a1a1a;
 }
 
 .calculator {
